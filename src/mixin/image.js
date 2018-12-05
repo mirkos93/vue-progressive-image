@@ -293,7 +293,10 @@ export default {
             this.loadPlaceholder()
             fetch( this.src )
                 .then( (response) => {
-                    this.getOrientation( response.blob(), (base64img, orientationValue) => {
+                    return response.blob();
+                })
+                .then((blob) => {
+                    this.getOrientation( blob, (base64img, orientationValue) => {
                         this.loadImage(base64img, orientationValue);
                     } );
                 } );
