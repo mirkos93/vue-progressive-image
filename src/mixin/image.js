@@ -247,11 +247,28 @@ export default {
                 }
             }
         },
-
+        _arrayBufferToBase64 (buff) {
+            var alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+                enc = "",
+                n, p, bits;
+            d = new Uint8Array(buff);
+            var len = buff.byteLength * 8;
+            for (var offset = 0; offset < len; offset += 6) {
+                n = (offset / 8) | 0;
+                p = offset % 8;
+                bits = ((d[n] || 0) << p) >> 2;
+                if (p > 2) {
+                    bits |= (d[n + 1] || 0) >> (10 - p)
+                }
+                enc += alph.charAt(bits & 63);
+            }
+            enc += (p == 4) ? '=' : (p == 6) ? '==' : '';
+            return enc;
+        },
         getOrientation(file, callback) {
             var fileReader = new FileReader();
             fileReader.onloadend = function () {
-                var base64img = "data:" + file.type + ";base64," + _arrayBufferToBase64(fileReader.result);
+                var base64img = "data:" + file.type + ";base64," + this._arrayBufferToBase64(fileReader.result);
                 var scanner = new DataView(fileReader.result);
                 var idx = 0;
                 var value = 1; // Non-rotated is the default
