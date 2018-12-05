@@ -248,12 +248,12 @@ export default {
             }
         },
         _arrayBufferToBase64 (buff) {
-            var alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+            let alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
                 enc = "",
                 n, p, bits;
-            d = new Uint8Array(buff);
-            var len = buff.byteLength * 8;
-            for (var offset = 0; offset < len; offset += 6) {
+            let d = new Uint8Array(buff);
+            let len = buff.byteLength * 8;
+            for (let offset = 0; offset < len; offset += 6) {
                 n = (offset / 8) | 0;
                 p = offset % 8;
                 bits = ((d[n] || 0) << p) >> 2;
@@ -266,12 +266,12 @@ export default {
             return enc;
         },
         getOrientation(file, callback) {
-            var fileReader = new FileReader();
+            let fileReader = new FileReader();
             fileReader.onloadend = () => {
-                var base64img = "data:" + file.type + ";base64," + this._arrayBufferToBase64(fileReader.result);
-                var scanner = new DataView(fileReader.result);
-                var idx = 0;
-                var value = 1; // Non-rotated is the default
+                let base64img = "data:" + file.type + ";base64," + this._arrayBufferToBase64(fileReader.result);
+                let scanner = new DataView(fileReader.result);
+                let idx = 0;
+                let value = 1; // Non-rotated is the default
                 if (fileReader.result.length < 2 || scanner.getUint16(idx) != 0xFFD8) {
                     // Not a JPEG
                     if (callback) {
@@ -280,13 +280,13 @@ export default {
                     return;
                 }
                 idx += 2;
-                var maxBytes = scanner.byteLength;
+                let maxBytes = scanner.byteLength;
                 while (idx < maxBytes - 2) {
-                    var uint16 = scanner.getUint16(idx);
+                    let uint16 = scanner.getUint16(idx);
                     idx += 2;
                     switch (uint16) {
                         case 0xFFE1: // Start of EXIF
-                            var exifLength = scanner.getUint16(idx);
+                            let exifLength = scanner.getUint16(idx);
                             maxBytes = exifLength - idx;
                             idx += 2;
                             break;
