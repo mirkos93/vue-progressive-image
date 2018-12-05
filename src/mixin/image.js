@@ -296,6 +296,7 @@ export default {
                     return response.blob();
                 })
                 .then((blob) => {
+                    console.log('BLOB', blob);
                     this.getOrientation( blob, (base64img, orientationValue) => {
                         this.loadImage(base64img, orientationValue);
                     } );
