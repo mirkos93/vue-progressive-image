@@ -267,7 +267,7 @@ export default {
         },
         getOrientation(file, callback) {
             var fileReader = new FileReader();
-            fileReader.onloadend = function () {
+            fileReader.onloadend = () => {
                 var base64img = "data:" + file.type + ";base64," + this._arrayBufferToBase64(fileReader.result);
                 var scanner = new DataView(fileReader.result);
                 var idx = 0;
