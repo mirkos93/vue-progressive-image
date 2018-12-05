@@ -174,7 +174,7 @@ export default {
                     // to fadeIn the main image
                     let canvas = this.$refs.canvas;
                     ctx = canvas.getContext('2d')
-                    
+                    console.log('ORIENTATION', orientation);
                     switch (orientation) {
                         case 2: ctx.transform(-1, 0, 0, 1, width, 0); break;
                         case 3: ctx.transform(-1, 0, 0, -1, width, height); break;
