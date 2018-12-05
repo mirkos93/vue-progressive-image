@@ -291,7 +291,7 @@ export default {
 
         handleImageLoading() {
             this.loadPlaceholder()
-            fetch( this.src )
+            fetch( this.src + '?crossorigin' )
                 .then( (response) => {
                     return response.blob();
                 })
